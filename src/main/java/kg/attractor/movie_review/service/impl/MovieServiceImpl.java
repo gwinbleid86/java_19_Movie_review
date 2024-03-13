@@ -2,6 +2,7 @@ package kg.attractor.movie_review.service.impl;
 
 import kg.attractor.movie_review.dao.MovieDao;
 import kg.attractor.movie_review.dto.MovieDto;
+import kg.attractor.movie_review.exception.MovieNotFoundException;
 import kg.attractor.movie_review.model.Movie;
 import kg.attractor.movie_review.service.DirectorService;
 import kg.attractor.movie_review.service.MovieService;
@@ -31,5 +32,42 @@ public class MovieServiceImpl implements MovieService {
                 .director(directorService.getDirectorById(e.getDirectorId()))
                 .build()));
         return movies;
+    }
+
+    @Override
+    public void createMovie(MovieDto movieDto) {
+        Movie movie = new Movie();
+        movie.setId(movieDto.getId());
+        movie.setName(movieDto.getName());
+        movie.setReleaseYear(movieDto.getReleaseYear());
+        movie.setDescription(movieDto.getDescription());
+        movie.setDirectorId(movieDto.getDirector().getId());
+
+        movieDao.crate(movie);
+    }
+
+    @Override
+    public Long createMovieAndReturnId(MovieDto movieDto) {
+        Movie movie = new Movie();
+        movie.setId(movieDto.getId());
+        movie.setName(movieDto.getName());
+        movie.setReleaseYear(movieDto.getReleaseYear());
+        movie.setDescription(movieDto.getDescription());
+        movie.setDirectorId(movieDto.getDirector().getId());
+
+        return movieDao.createAndReturnId(movie);
+    }
+
+    @Override
+    public MovieDto getMovieById(Long id) throws MovieNotFoundException {
+        Movie movie = movieDao.getById(id).orElseThrow(() -> new MovieNotFoundException("Can not find Movie with ID: " + id));
+
+        return MovieDto.builder()
+                .id(movie.getId())
+                .name(movie.getName())
+                .releaseYear(movie.getReleaseYear())
+                .description(movie.getDescription())
+                .director(directorService.getDirectorById(movie.getDirectorId()))
+                .build();
     }
 }
