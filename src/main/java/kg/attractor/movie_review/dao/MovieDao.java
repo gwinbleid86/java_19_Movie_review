@@ -71,4 +71,12 @@ public class MovieDao {
                 )
         );
     }
+
+    public void delete(long id) {
+        String sql = """
+                delete from movie
+                where id = ?;
+                """;
+        jdbcTemplate.update(sql, id);
+    }
 }

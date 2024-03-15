@@ -70,4 +70,13 @@ public class MovieServiceImpl implements MovieService {
                 .director(directorService.getDirectorById(movie.getDirectorId()))
                 .build();
     }
+
+    @Override
+    public boolean deleteMovie(long id) {
+        if (movieDao.getById(id).isPresent()) {
+            movieDao.delete(id);
+            return true;
+        }
+        return false;
+    }
 }
