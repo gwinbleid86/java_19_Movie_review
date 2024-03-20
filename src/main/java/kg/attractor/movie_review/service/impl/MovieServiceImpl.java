@@ -2,6 +2,7 @@ package kg.attractor.movie_review.service.impl;
 
 import kg.attractor.movie_review.dao.MovieDao;
 import kg.attractor.movie_review.dto.MovieDto;
+import kg.attractor.movie_review.exception.MovieNotFoundException;
 import kg.attractor.movie_review.model.Movie;
 import kg.attractor.movie_review.service.DirectorService;
 import kg.attractor.movie_review.service.MovieService;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -61,7 +61,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public MovieDto getMovieById(Long id) {
         Movie movie = movieDao.getById(id)
-                .orElseThrow(() -> new NoSuchElementException("Can not find Movie with ID: " + id));
+                .orElseThrow(() -> new MovieNotFoundException("Can not find Movie with ID: " + id));
 
         return MovieDto.builder()
                 .id(movie.getId())

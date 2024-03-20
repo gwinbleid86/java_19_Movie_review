@@ -21,7 +21,6 @@ public class UserServiceImpl implements UserService {
         List<User> users = userDao.getUsers();
         List<UserDto> dtos = new ArrayList<>();
         users.forEach(e -> dtos.add(UserDto.builder()
-                .id(e.getId())
                 .email(e.getEmail())
                 .password(e.getPassword())
                 .build()));
@@ -32,7 +31,6 @@ public class UserServiceImpl implements UserService {
     public UserDto getUserById(String email) throws UserNotFoundException {
         User user = userDao.getUserById(email).orElseThrow(() -> new UserNotFoundException("Can not find user with ID: " + email));
         return UserDto.builder()
-                .id(user.getId())
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .build();
