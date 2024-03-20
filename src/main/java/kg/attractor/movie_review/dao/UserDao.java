@@ -21,28 +21,28 @@ public class UserDao {
 
     public List<User> getUsers() {
         String sql = """
-                select * from users;
+                select * from user_table;
                 """;
         return template.query(sql, new BeanPropertyRowMapper<>(User.class));
     }
 
-    public Optional<User> getUserById(int id) {
+    public Optional<User> getUserById(String email) {
         String sql = """
-                select * from users
-                where id = ?;
+                select * from user_table
+                where email = ?;
                 """;
         return Optional.ofNullable(
                 DataAccessUtils.singleResult(
-                        template.query(sql, new BeanPropertyRowMapper<>(User.class), id)
+                        template.query(sql, new BeanPropertyRowMapper<>(User.class), email)
                 )
         );
     }
 
     public void createUser(UserDto user) {
-        String sql = "insert into users(name, password) " +
-                "values(:name, :password);";
+        String sql = "insert into user_table(email, password) " +
+                "values(:email, :password);";
         namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource()
-                .addValue("name", user.getName())
+                .addValue("email", user.getEmail())
                 .addValue("password", user.getPassword()));
     }
 }

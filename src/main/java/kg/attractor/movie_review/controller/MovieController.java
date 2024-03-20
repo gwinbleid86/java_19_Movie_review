@@ -1,7 +1,6 @@
 package kg.attractor.movie_review.controller;
 
 import kg.attractor.movie_review.dto.MovieDto;
-import kg.attractor.movie_review.exception.MovieNotFoundException;
 import kg.attractor.movie_review.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,11 +30,7 @@ public class MovieController {
     //@RequestMapping(name = "{id}", method = RequestMethod.GET)
     @GetMapping("{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
-        try {
-            return ResponseEntity.ok(movieService.getMovieById(id));
-        } catch (MovieNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        return ResponseEntity.ok(movieService.getMovieById(id));
     }
 
     //    @PostMapping("add-and-return-id")

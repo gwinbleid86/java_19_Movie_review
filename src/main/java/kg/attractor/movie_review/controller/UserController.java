@@ -1,5 +1,6 @@
 package kg.attractor.movie_review.controller;
 
+import jakarta.validation.Valid;
 import kg.attractor.movie_review.dto.UserDto;
 import kg.attractor.movie_review.exception.UserNotFoundException;
 import kg.attractor.movie_review.service.UserService;
@@ -9,35 +10,38 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("users")
+    @GetMapping
     public ResponseEntity<List<UserDto>> getUsers() {
         return ResponseEntity.ok(userService.getUsers());
     }
 
-    @GetMapping("users/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable int id) {
+    @GetMapping("users/{email}")
+    public ResponseEntity<?> getUserById(@PathVariable String email) {
         try {
-            UserDto user = userService.getUserById(id);
+            UserDto user = userService.getUserById(email);
             return ResponseEntity.ok(user);
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
-    @PostMapping("users")
-    public HttpStatus createUser(UserDto user) {
+    @PostMapping
+    public ResponseEntity<?> createUser(@Valid UserDto user) {
         userService.createUser(user);
-        return HttpStatus.OK;
+        return ResponseEntity.ok("User is valid");
     }
+
 
 //    @GetMapping("users/{id}/profile") http://localhost:8089/users/12/profile
 

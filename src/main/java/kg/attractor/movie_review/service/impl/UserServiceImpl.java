@@ -22,18 +22,18 @@ public class UserServiceImpl implements UserService {
         List<UserDto> dtos = new ArrayList<>();
         users.forEach(e -> dtos.add(UserDto.builder()
                 .id(e.getId())
-                .name(e.getName())
+                .email(e.getEmail())
                 .password(e.getPassword())
                 .build()));
         return dtos;
     }
 
     @Override
-    public UserDto getUserById(int id) throws UserNotFoundException {
-        User user = userDao.getUserById(id).orElseThrow(() -> new UserNotFoundException("Can not find user with ID: " + id));
+    public UserDto getUserById(String email) throws UserNotFoundException {
+        User user = userDao.getUserById(email).orElseThrow(() -> new UserNotFoundException("Can not find user with ID: " + email));
         return UserDto.builder()
                 .id(user.getId())
-                .name(user.getName())
+                .email(user.getEmail())
                 .password(user.getPassword())
                 .build();
     }
