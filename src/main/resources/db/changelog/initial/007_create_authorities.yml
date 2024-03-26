@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create table AUTHORITIES
+      author: Aleksei
+      changes:
+        - createTable:
+            tableName: authorities
+            columns:
+              - column:
+                  name: id
+                  type: long
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: role
+                  type: varchar(45)
+                  constraints:
+                    nullable: false

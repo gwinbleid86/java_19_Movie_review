@@ -6,6 +6,7 @@ import kg.attractor.movie_review.exception.UserNotFoundException;
 import kg.attractor.movie_review.model.User;
 import kg.attractor.movie_review.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
+
+    private final PasswordEncoder encoder;
 
     @Override
     public List<UserDto> getUsers() {
@@ -38,6 +41,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(UserDto user) {
-        userDao.createUser(user);
+        User u = new User();
+        u.setEmail(user.getEmail());
+        u.setUsername(user.getUsername());
+        u.setPassword(encoder.encode(user.getPassword()));
+        u.setEnabled(true);
+        userDao.createUser(u);
     }
 }

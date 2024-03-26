@@ -1,6 +1,5 @@
 package kg.attractor.movie_review.dao;
 
-import kg.attractor.movie_review.dto.UserDto;
 import kg.attractor.movie_review.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.support.DataAccessUtils;
@@ -38,11 +37,12 @@ public class UserDao {
         );
     }
 
-    public void createUser(UserDto user) {
-        String sql = "insert into user_table(email, password) " +
-                "values(:email, :password);";
+    public void createUser(User user) {
+        String sql = "insert into user_table(email, password, enabled) " +
+                "values(:email, :password, :enabled);";
         namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource()
                 .addValue("email", user.getEmail())
-                .addValue("password", user.getPassword()));
+                .addValue("password", user.getPassword())
+                .addValue("enabled", user.getEnabled()));
     }
 }
