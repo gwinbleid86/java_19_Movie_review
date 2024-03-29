@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -25,6 +26,22 @@ public class MovieController {
     @GetMapping
     public ResponseEntity<List<MovieDto>> getMovies() {
         return ResponseEntity.ok(movieService.getMovies());
+    }
+
+    @GetMapping("sorting")
+    public ResponseEntity<List<MovieDto>> getMoviesSorted(
+            @RequestParam(name = "sortedBy", defaultValue = "name") String sortedBy,
+            @RequestParam(name = "sortDirection", defaultValue = "asc") String sortDirection
+    ) {
+        return ResponseEntity.ok(movieService.getMoviesSorted(sortedBy, sortDirection));
+    }
+
+    @GetMapping("paging")
+    public ResponseEntity<List<MovieDto>> getMoviesWithPaging(
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "pageSize", defaultValue = "2") Integer pageSize
+    ) {
+        return ResponseEntity.ok(movieService.getMoviesWithPaging(page, pageSize));
     }
 
     //@RequestMapping(name = "{id}", method = RequestMethod.GET)

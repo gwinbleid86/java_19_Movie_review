@@ -2,6 +2,7 @@ package kg.attractor.movie_review.exception.handler;
 
 import kg.attractor.movie_review.exception.ErrorResponseBody;
 import kg.attractor.movie_review.exception.MovieNotFoundException;
+import kg.attractor.movie_review.exception.SortedCriteriaException;
 import kg.attractor.movie_review.service.ErrorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MovieNotFoundException.class)
     public ResponseEntity<ErrorResponseBody> noSuchElement(MovieNotFoundException exception) {
+        return new ResponseEntity<>(errorService.makeResponse(exception), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(SortedCriteriaException.class)
+    public ResponseEntity<ErrorResponseBody> noSuchElement(SortedCriteriaException exception) {
         return new ResponseEntity<>(errorService.makeResponse(exception), HttpStatus.NOT_FOUND);
     }
 

@@ -30,6 +30,23 @@ public class MovieDao {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Movie.class));
     }
 
+    public List<Movie> getMovies(int perPage, int offset) {
+        String sql = """
+                select *
+                from movie
+                limit ?
+                offset ?;
+                """;
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Movie.class), perPage, offset);
+    }
+
+    public Integer getCount() {
+        String sql = """
+                select count(id) from movie;                
+                """;
+        return jdbcTemplate.queryForObject(sql, Integer.class);
+    }
+
     public Long createAndReturnId(Movie movie) {
         String sql = """
                 insert into movie (name, release_year, description, director_id)

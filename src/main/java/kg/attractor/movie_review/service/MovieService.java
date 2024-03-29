@@ -7,6 +7,10 @@ import java.util.List;
 public interface MovieService {
     List<MovieDto> getMovies();
 
+    List<MovieDto> getMoviesSorted(String sortedBy, String sortValue);
+
+    List<MovieDto> getMoviesWithPaging(Integer page, Integer perPage);
+
     void createMovie(MovieDto movieDto);
 
     Long createMovieAndReturnId(MovieDto movieDto);
