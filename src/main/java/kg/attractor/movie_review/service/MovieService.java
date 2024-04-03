@@ -18,4 +18,6 @@ public interface MovieService {
     MovieDto getMovieById(Long id);
 
     boolean deleteMovie(long id);
+
+    void createMovie(MovieDto movieDto, String director, String castMemberName, String castMemberRole);
 }

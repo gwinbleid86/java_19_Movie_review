@@ -126,4 +126,9 @@ public class MovieServiceImpl implements MovieService {
         }
         return false;
     }
+
+    @Override
+    public void createMovie(MovieDto movieDto, String director, String castMemberName, String castMemberRole) {
+
+    }
 }
