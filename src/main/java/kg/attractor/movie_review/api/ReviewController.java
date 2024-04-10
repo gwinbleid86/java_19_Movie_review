@@ -1,4 +1,4 @@
-package kg.attractor.movie_review.controller;
+package kg.attractor.movie_review.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

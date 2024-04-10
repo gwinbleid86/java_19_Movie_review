@@ -12,5 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 public class MovieImageDto {
     private MultipartFile file;
+
     private Long movieId;
 }

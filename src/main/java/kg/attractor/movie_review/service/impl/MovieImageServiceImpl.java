@@ -7,7 +7,11 @@ import kg.attractor.movie_review.service.MovieImageService;
 import kg.attractor.movie_review.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.NoSuchElementException;
 
 @Slf4j
 @Service
@@ -26,5 +30,13 @@ public class MovieImageServiceImpl implements MovieImageService {
         movieImage.setFileName(filename);
 
         movieImageDao.save(movieImage);
+    }
+
+    @Override
+    public ResponseEntity<?> download(int imageId) {
+        MovieImage image = movieImageDao.getImageNameById(imageId)
+                .orElseThrow(() -> new NoSuchElementException("Can not find Image by ID: " + imageId));
+        String filename = image.getFileName();
+        return fileUtil.getOutputFile(filename, "images", MediaType.IMAGE_JPEG);
     }
 }
