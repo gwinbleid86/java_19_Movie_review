@@ -1,6 +1,7 @@
 package kg.attractor.movie_review.service;
 
 import kg.attractor.movie_review.dto.MovieDto;
+import kg.attractor.movie_review.dto.MovieDtoPaging;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ public interface MovieService {
 
     List<MovieDto> getMoviesSorted(String sortedBy, String sortValue);
 
-    List<MovieDto> getMoviesWithPaging(Integer page, Integer perPage);
+    MovieDtoPaging getMoviesWithPaging(Integer page, Integer perPage);
 
     void createMovie(MovieDto movieDto);
 

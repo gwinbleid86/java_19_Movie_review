@@ -3,6 +3,7 @@ package kg.attractor.movie_review.service.impl;
 import kg.attractor.movie_review.common.SortStrategy;
 import kg.attractor.movie_review.dao.MovieDao;
 import kg.attractor.movie_review.dto.MovieDto;
+import kg.attractor.movie_review.dto.MovieDtoPaging;
 import kg.attractor.movie_review.exception.MovieNotFoundException;
 import kg.attractor.movie_review.model.Movie;
 import kg.attractor.movie_review.service.DirectorService;
@@ -54,9 +55,12 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<MovieDto> getMoviesWithPaging(Integer page, Integer pageSize) {
+    public MovieDtoPaging getMoviesWithPaging(Integer page, Integer pageSize) {
         int count = movieDao.getCount();
         int totalPages = count / pageSize;
+        if (count % pageSize != 0) {
+            totalPages++;
+        }
 
         if (totalPages <= page) {
             page = totalPages;
@@ -76,8 +80,14 @@ public class MovieServiceImpl implements MovieService {
                 .releaseYear(e.getReleaseYear())
                 .director(directorService.getDirectorById(e.getDirectorId()))
                 .build()));
-//        }
-        return movies;
+
+        var moviePaging = MovieDtoPaging.builder()
+                .movies(movies)
+                .totalPage(totalPages)
+                .pageSize(pageSize)
+                .page(page)
+                .build();
+        return moviePaging;
     }
 
     @Override

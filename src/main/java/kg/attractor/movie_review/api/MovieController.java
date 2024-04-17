@@ -1,6 +1,7 @@
 package kg.attractor.movie_review.api;
 
 import kg.attractor.movie_review.dto.MovieDto;
+import kg.attractor.movie_review.dto.MovieDtoPaging;
 import kg.attractor.movie_review.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,16 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController("restProfile")
-@RequestMapping("movies")
+@RequestMapping("/api/movies")
 @RequiredArgsConstructor
 public class MovieController {
 
     private final MovieService movieService;
 
-    @GetMapping
-    public ResponseEntity<List<MovieDto>> getMovies() {
-        return ResponseEntity.ok(movieService.getMovies());
-    }
+//    @GetMapping
+//    public ResponseEntity<List<MovieDto>> getMovies() {
+//        return ResponseEntity.ok(movieService.getMovies());
+//    }
 
     @GetMapping("sorting")
     public ResponseEntity<List<MovieDto>> getMoviesSorted(
@@ -37,7 +38,7 @@ public class MovieController {
     }
 
     @GetMapping("paging")
-    public ResponseEntity<List<MovieDto>> getMoviesWithPaging(
+    public ResponseEntity<MovieDtoPaging> getMoviesWithPaging(
             @RequestParam(name = "page", defaultValue = "0") Integer page,
             @RequestParam(name = "pageSize", defaultValue = "2") Integer pageSize
     ) {

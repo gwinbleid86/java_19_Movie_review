@@ -1,6 +1,7 @@
 <#import "../layout.ftlh" as main>
 <@main.layout>
     <a href="/add" class="btn btn-primary">Create new movie</a>
+    <a href="/api/movies" class="btn btn-primary">JavaScript Movies</a>
     <div class="row">
         <#list movies as movie>
             <div class="col m-2">

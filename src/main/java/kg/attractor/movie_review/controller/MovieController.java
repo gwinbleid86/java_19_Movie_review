@@ -46,4 +46,9 @@ public class MovieController {
         movieService.createMovie(movieDto, director, castMemberName, castMemberRole);
         return "redirect:/";
     }
+
+    @GetMapping("api/movies")
+    public String apiMoviePage() {
+        return "api/movies";
+    }
 }
