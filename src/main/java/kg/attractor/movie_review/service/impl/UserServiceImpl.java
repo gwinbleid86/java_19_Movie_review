@@ -6,12 +6,15 @@ import kg.attractor.movie_review.exception.UserNotFoundException;
 import kg.attractor.movie_review.model.User;
 import kg.attractor.movie_review.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -47,5 +50,10 @@ public class UserServiceImpl implements UserService {
         u.setPassword(encoder.encode(user.getPassword()));
         u.setEnabled(true);
         userDao.createUser(u);
+    }
+
+    @Override
+    public void login(Authentication auth) {
+        log.info(auth.getName());
     }
 }
