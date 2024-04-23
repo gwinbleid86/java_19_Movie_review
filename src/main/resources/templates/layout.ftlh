@@ -1,3 +1,4 @@
+<#import "spring.ftl" as spring>
 <#macro layout>
 
     <!doctype html>
@@ -28,9 +29,9 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav flex-fill">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        <a class="nav-link" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Features</a>
@@ -41,8 +42,32 @@
                     <li class="nav-item">
                         <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                     </li>
+                    <#--                    <li class="nav-item ms-auto">-->
+                    <#--                        <a href="/auth/login" class="nav-link active">Log In</a>-->
+                    <#--                    </li>-->
                 </ul>
             </div>
+            <#assign
+            known = SPRING_SECURITY_CONTEXT??
+            >
+            <#if known>
+                <#assign
+                user = SPRING_SECURITY_CONTEXT.authentication.principal
+                name = user.getUsername()
+                >
+                <a href="/profile/${name}"
+                   class="text-light m-2 m-sm-0">Hello ${name}</a>
+
+
+                <a href="/logout" class="btn btn-outline-info m-2"
+                   id="logout">Logout</a>
+
+            <#else>
+                <a href="/auth/login"
+                   class="btn btn-outline-info m-2">Login</a>
+                <a href="/auth/register"
+                   class="btn btn-outline-info m-2">Register</a>
+            </#if>
         </div>
     </nav>
 
