@@ -9,12 +9,15 @@ import kg.attractor.movie_review.model.Movie;
 import kg.attractor.movie_review.service.DirectorService;
 import kg.attractor.movie_review.service.MovieService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MovieServiceImpl implements MovieService {
@@ -116,8 +119,13 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public MovieDto getMovieById(Long id) {
-        Movie movie = movieDao.getById(id)
-                .orElseThrow(() -> new MovieNotFoundException("Can not find Movie with ID: " + id));
+        Optional<Movie> mayBeMovie = movieDao.getById(id);
+//                .orElseThrow(() -> new MovieNotFoundException("Can not find Movie with ID: " + id));
+        if (mayBeMovie.isEmpty()) {
+            log.error("Can not find Movie with ID: {}", id);
+            throw new MovieNotFoundException("Can not find Movie with ID: " + id);
+        }
+        Movie movie = mayBeMovie.get();
 
         return MovieDto.builder()
                 .id(movie.getId())

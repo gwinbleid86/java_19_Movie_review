@@ -1,5 +1,5 @@
 <#import "../layout.ftlh" as main>
-<@main.layout>
+<@main.layout ; spring>
 
     <!-- Section: Design Block -->
     <section class=" text-center text-lg-start">

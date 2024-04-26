@@ -72,7 +72,7 @@
     </nav>
 
     <div class="container">
-        <#nested >
+        <#nested spring>
     </div>
 
     </body>
