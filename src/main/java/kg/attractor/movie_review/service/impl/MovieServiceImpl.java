@@ -4,7 +4,7 @@ import kg.attractor.movie_review.common.SortStrategy;
 import kg.attractor.movie_review.dao.MovieDao;
 import kg.attractor.movie_review.dto.MovieDto;
 import kg.attractor.movie_review.dto.MovieDtoPaging;
-import kg.attractor.movie_review.exception.MovieNotFoundException;
+import kg.attractor.movie_review.exception.MovieNotFound;
 import kg.attractor.movie_review.model.Movie;
 import kg.attractor.movie_review.service.DirectorService;
 import kg.attractor.movie_review.service.MovieService;
@@ -123,7 +123,7 @@ public class MovieServiceImpl implements MovieService {
 //                .orElseThrow(() -> new MovieNotFoundException("Can not find Movie with ID: " + id));
         if (mayBeMovie.isEmpty()) {
             log.error("Can not find Movie with ID: {}", id);
-            throw new MovieNotFoundException("Can not find Movie with ID: " + id);
+            throw new MovieNotFound("Can not find Movie with ID: " + id);
         }
         Movie movie = mayBeMovie.get();
 
