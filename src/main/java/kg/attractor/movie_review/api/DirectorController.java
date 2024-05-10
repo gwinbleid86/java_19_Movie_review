@@ -19,7 +19,7 @@ public class DirectorController {
 
     @GetMapping("{id}")
     public ResponseEntity<?> getDirectorById(@PathVariable long id) {
-        DirectorDto director = directorService.getDirectorById(id);
+        DirectorDto director = directorService.getDirectorDtoById(id);
         if (director == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Director not found");
         }

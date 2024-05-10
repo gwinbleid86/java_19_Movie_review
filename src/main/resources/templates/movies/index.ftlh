@@ -1,10 +1,8 @@
 <#import "../layout.ftlh" as main>
 <@main.layout>
     <div class="m-5">
-        <a href="/add" class="btn btn-primary">Create new movie</a>
-        <a href="/api/movies" class="btn btn-primary">JavaScript Movies</a>
         <div class="row">
-            <#list movies as movie>
+            <#list movies.content as movie>
                 <div class="col m-2">
                     <div class="card" style="width: 18rem; min-height: 200px">
                         <#--        <img src="..." class="card-img-top" alt="...">-->

@@ -8,6 +8,8 @@
         <meta name="viewport"
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="_csrf_header" content="${_csrf.headerName}">
+        <meta name="_csrf_token" content="${_csrf.token}">
         <title>Movie Review</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
@@ -21,7 +23,7 @@
 
     </head>
     <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary mb-5" data-bs-theme="dark">
         <div class="container">
             <a class="navbar-brand" href="/">Movie Review</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -31,22 +33,14 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav flex-fill">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/">Home</a>
+                        <a class="nav-link" href="/add">Create new movie</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
+                        <a class="nav-link" href="/api/movies">JavaScript Movies</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                    </li>
-                    <#--                    <li class="nav-item ms-auto">-->
-                    <#--                        <a href="/auth/login" class="nav-link active">Log In</a>-->
-                    <#--                    </li>-->
                 </ul>
             </div>
+
             <#assign
             known = SPRING_SECURITY_CONTEXT??
             >
@@ -56,11 +50,25 @@
                 name = user.getUsername()
                 >
                 <a href="/profile/${name}"
-                   class="text-light m-2 m-sm-0">Hello ${name}</a>
+                   class="text-light m-2 m-sm-0">Hello ${name}:
+                    <#list user.authorities as auth>
+                        <span class="text-danger">${auth}</span>
+                        <#if auth?has_next>
+                            /
+                        </#if>
+                    </#list>
+                </a>
 
-
-                <a href="/logout" class="btn btn-outline-info m-2"
-                   id="logout">Logout</a>
+                <#if _csrf??>
+                    <form action="/logout" method="post">
+                        <input type="hidden" name="${(_csrf.parameterName)!'csrf'}"
+                               value="${(_csrf.token)!'--no-token--'}">
+                        <button type="submit" class="btn btn-outline-info m-2">Logout</button>
+                    </form>
+                <#else>
+                    <a href="/logout" class="btn btn-outline-info m-2"
+                       id="logout">Logout</a>
+                </#if>
 
             <#else>
                 <a href="/auth/login"

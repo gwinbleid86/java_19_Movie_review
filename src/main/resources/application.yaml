@@ -4,6 +4,7 @@ server:
 spring:
   mvc:
     static-path-pattern: /static/**
+    log-request-details: false
   datasource:
     url: jdbc:h2:./db/movie_review;AUTO_SERVER=true
     username: root
@@ -16,16 +17,30 @@ spring:
       enabled: false
   freemarker:
     expose-session-attributes: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        #        generate_statistics: true
+        format_sql: true
+    show-sql: true
+
+
 logging:
   level:
     root: info
     org:
       springframework:
         security: debug
+      hibernate:
+        #        stat: debug
+        type: trace
+    sql: trace
+    web: debug
   #
   #  pattern:
   #    console: "%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"
-
   file:
     name: logs/spring.log
 

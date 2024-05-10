@@ -35,17 +35,21 @@
                                 <h2 class="text-uppercase text-center mb-5">Create an account</h2>
 
                                 <form action="/auth/register" method="post">
+                                    <#if _csrf??>
+                                        <input type="hidden" name="${(_csrf.parameterName)!'csrf-param-name'}"
+                                               value="${(_csrf.token)!'csrf-token'}"/>
+                                    </#if>
 
                                     <div data-mdb-input-init class="form-outline mb-4">
                                         <label class="form-label" for="form3Example1cg">Your Name</label>
-                                        <@spring.formInput "userDto.username" 'id="form3Example1cg" class="form-control form-control-lg"'/>
+                                        <@spring.formInput "userDto.username" 'id="form3Example1cg" class="form-control form-control-lg" value="${userDto.username!""}"'/>
                                         <#--                                        <input type="text" id="form3Example1cg" class="form-control form-control-lg"-->
                                         <#--                                               name="username"/>-->
                                     </div>
 
                                     <div data-mdb-input-init class="form-outline mb-4">
                                         <label class="form-label" for="form3Example3cg">Your Email</label>
-                                        <@spring.formInput "userDto.email" 'id="form3Example3cg" class="form-control form-control-lg"'/>
+                                        <@spring.formInput "userDto.email" 'id="form3Example3cg" class="form-control form-control-lg" value="${userDto.email!""}"'/>
                                         <#--                                        <input type="email" id="form3Example3cg" class="form-control form-control-lg"-->
                                         <#--                                               name="email"/>-->
                                     </div>
