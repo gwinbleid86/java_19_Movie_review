@@ -9,4 +9,5 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     Optional<User> getByEmail(String email);
 
+    Optional<User> findByResetPasswordToken(String token);
 }

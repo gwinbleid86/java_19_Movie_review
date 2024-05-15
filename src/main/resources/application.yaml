@@ -25,6 +25,18 @@ spring:
         #        generate_statistics: true
         format_sql: true
     show-sql: true
+  #=========== Mail config
+  mail:
+    host: smtp.gmail.com
+    username: gwinbleid86@gmail.com
+    password: YOUR_PASSWORD
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 
 logging:

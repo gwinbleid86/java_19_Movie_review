@@ -23,6 +23,7 @@ public class User {
     private String username;
     private String password;
     private Boolean enabled;
+    private String resetPasswordToken;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "reviewer")
     private Review review;
