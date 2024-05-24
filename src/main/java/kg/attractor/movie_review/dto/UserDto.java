@@ -24,10 +24,10 @@ public class UserDto {
     private String email;
 
     @NotBlank
-    @Size(min = 4, max = 24, message = "Length must be >= 4 and <= 24")
+    @Size(min = 4, max = 24, message = "{validation.user.password.length}")
     @Pattern(
             regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).+$",
-            message = "Should contain at least one UPPER case letter, one number"
+            message = "{validation.user.password}"
     )
     private String password;
 }

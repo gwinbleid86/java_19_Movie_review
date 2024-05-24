@@ -36,13 +36,14 @@
                             <!-- Email input -->
                             <div data-mdb-input-init class="form-outline mb-4">
                                 <input type="email" id="form2Example1" class="form-control" name="username"/>
-                                <label class="form-label" for="form2Example1">Email address</label>
+                                <label class="form-label" for="form2Example1"><@spring.message 'login.email'/></label>
                             </div>
 
                             <!-- Password input -->
                             <div data-mdb-input-init class="form-outline mb-4">
                                 <input type="password" id="form2Example2" class="form-control" name="password"/>
-                                <label class="form-label" for="form2Example2">Password</label>
+                                <label class="form-label"
+                                       for="form2Example2"><@spring.message 'login.password'/></label>
                             </div>
 
                             <!-- 2 column grid layout for inline styling -->
@@ -57,13 +58,13 @@
 
                                 <div class="col">
                                     <#--                                    <!-- Simple link &ndash;&gt;-->
-                                    <a href="/auth/forgot_password">Forgot password?</a>
+                                    <a href="/auth/forgot_password"><@spring.message 'login.forgot.password'/></a>
                                 </div>
                             </div>
 
                             <!-- Submit button -->
                             <button type="submit" data-mdb-button-init data-mdb-ripple-init
-                                    class="btn btn-primary btn-block mb-4">Sign in
+                                    class="btn btn-primary btn-block mb-4"><@spring.message 'login.signin'/>
                             </button>
 
                         </form>

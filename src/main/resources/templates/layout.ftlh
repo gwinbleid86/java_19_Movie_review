@@ -33,10 +33,20 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav flex-fill">
                     <li class="nav-item">
-                        <a class="nav-link" href="/add">Create new movie</a>
+                        <a class="nav-link" href="/add"><@spring.message 'layout.create.new.movie'/></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/api/movies">JavaScript Movies</a>
+                        <a class="nav-link" href="/api/movies"><@spring.message 'layout.java.script.movies'/></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <@spring.message 'layout.dropdown'/>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li><a class="dropdown-item" href="?lang=ru"><@spring.message 'layout.ru'/></a></li>
+                            <li><a class="dropdown-item" href="?lang=en"><@spring.message 'layout.en'/></a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -50,7 +60,7 @@
                 name = user.getUsername()
                 >
                 <a href="/profile/${name}"
-                   class="text-light m-2 m-sm-0">Hello ${name}:
+                   class="text-light m-2 m-sm-0"><@spring.message 'layout.hello'/> ${name}:
                     <#list user.authorities as auth>
                         <span class="text-danger">${auth}</span>
                         <#if auth?has_next>
@@ -63,18 +73,19 @@
                     <form action="/logout" method="post">
                         <input type="hidden" name="${(_csrf.parameterName)!'csrf'}"
                                value="${(_csrf.token)!'--no-token--'}">
-                        <button type="submit" class="btn btn-outline-info m-2">Logout</button>
+                        <button type="submit"
+                                class="btn btn-outline-info m-2"><@spring.message 'layout.logout'/></button>
                     </form>
                 <#else>
                     <a href="/logout" class="btn btn-outline-info m-2"
-                       id="logout">Logout</a>
+                       id="logout"><@spring.message 'layout.logout'/></a>
                 </#if>
 
             <#else>
                 <a href="/auth/login"
-                   class="btn btn-outline-info m-2">Login</a>
+                   class="btn btn-outline-info m-2"><@spring.message 'layout.login'/></a>
                 <a href="/auth/register"
-                   class="btn btn-outline-info m-2">Register</a>
+                   class="btn btn-outline-info m-2"><@spring.message 'layout.register'/></a>
             </#if>
         </div>
     </nav>
