@@ -31,4 +31,10 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "users", cascade = CascadeType.ALL)
     private List<Authority> authorities;
 
+    public void addAuthority(Authority authority) {
+        this.authorities.add(authority);
+        authority.getUsers().add(this);
+    }
+
+
 }

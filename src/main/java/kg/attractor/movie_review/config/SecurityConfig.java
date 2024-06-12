@@ -1,5 +1,8 @@
 package kg.attractor.movie_review.config;
 
+import kg.attractor.movie_review.model.CustomOAuth2User;
+import kg.attractor.movie_review.service.impl.AuthUserDetailsService;
+import kg.attractor.movie_review.service.impl.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +18,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final AuthUserDetailsService userService;
+    private final CustomOAuth2UserService oAuth2UserService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -37,6 +43,16 @@ public class SecurityConfig {
                         .requestMatchers("/movies/**").hasAuthority("ADMIN")
                         .requestMatchers("/api/**").permitAll()
                         .anyRequest().permitAll()
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/auth/login")
+                        .userInfoEndpoint(userConfig -> userConfig
+                                .userService(oAuth2UserService))
+                        .successHandler((request, response, authentication) -> {
+                            var oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
+                            userService.processOAuthPostLogin(oAuth2User.getAttribute("email"));
+                            response.sendRedirect("/");
+                        })
                 )
                 .exceptionHandling(Customizer.withDefaults())
         ;
