@@ -11,6 +11,7 @@ import kg.attractor.movie_review.service.DirectorService;
 import kg.attractor.movie_review.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -28,9 +29,11 @@ import java.util.Optional;
 public class MovieServiceImpl implements MovieService {
     private final MovieDao movieDao;
 
+    @Lazy
     private final DirectorService directorService;
 
     private final MovieRepository movieRepository;
+
 
 
     private List<MovieDto> getListMovie(List<Movie> list) {
@@ -167,6 +170,10 @@ public class MovieServiceImpl implements MovieService {
         return Map.of("movie", m);
     }
 
+    /**
+     * @param id
+     * @return
+     */
     @Override
     public boolean deleteMovie(long id) {
 //        if (movieDao.getById(id).isPresent()) {
