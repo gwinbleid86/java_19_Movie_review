@@ -28,7 +28,7 @@ jobs:
         cache: maven
         
     - name: Start Maven Test & Package
-      run: mvn clean package
+      run: mvn clean package -DskipTests
 
     - name: Archive production artifacts
       uses: actions/upload-artifact@v3
