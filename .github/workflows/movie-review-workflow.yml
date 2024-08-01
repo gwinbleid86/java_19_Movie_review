@@ -32,9 +32,10 @@ jobs:
 
     - name: Archive production artifacts
       uses: actions/upload-artifact@v3
-      with: movie_review.jar
-      path: ./target/Movie_review*.jar
-      retention-days: 1
+      with:
+        name: movie_review.jar
+        path: ./target/Movie_review*.jar
+        retention-days: 1
 
   publish:
     needs: build
